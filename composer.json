@@ -1,5 +1,5 @@
 {
-    "name": "lr/redis-bundle",
+    "name": "lt/redis-bundle",
     "type": "symfony-bundle",
     "description": "Bundle implementing some Symfony2 features using Redis.",
     "keywords": ["symfony", "redis", "lessthan"],
