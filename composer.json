@@ -15,7 +15,7 @@
         "predis/predis": "0.7.*"
     },
     "autoload": {
-        "psr-0": { "Lt\\Bundle\RedisBundle": "" }
+        "psr-0": { "Lt\\Bundle\\RedisBundle": "" }
     },
     "target-dir": "Lt/Bundle/RedisBundle"
 }
