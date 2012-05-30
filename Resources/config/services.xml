@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="lt_redis.connection_factory" class="Lt\Bundle\RedisBundle\Connection\ConnectionFactory">
+            <argument type="service" id="lt_redis.logger" />
+        </service>
+
+        <service id="lt_redis.logger" class="Lt\Bundle\RedisBundle\Logger\RedisLogger">
+            <argument type="service" id="logger" on-invalid="null"/>
+            <tag name="monolog.logger" channel="lt_redis"/>
+        </service>
+
+    </services>
+
+</container>
