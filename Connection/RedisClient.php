@@ -8,8 +8,8 @@ class RedisClient extends BaseClient
 {
     function __construct($parameters = null, $options = null, ConnectionFactory $factory = null)
     {
-        if (empty($parameters['auth'])) {
-            unset($parameters['auth']);
+        if (empty($parameters['password'])) {
+            unset($parameters['password']);
         }
 
         if (!empty($factory)) {
