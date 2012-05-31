@@ -1,0 +1,74 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+
+{% set icon %}
+<img width="29" height="25" alt="Redis" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,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"/>
+{% endset %}
+{% set text %}
+    <div class="sf-toolbar-info-piece">
+        <b>Execution time</b>
+        <span>{{ '%0.2f'|format(collector.executionTime * 1000) }} ms </span>
+    </div>
+    <div class="sf-toolbar-info-piece">
+        <b>Commands</b>
+        <span>{{ collector.commandsCount }}</span>
+    </div>
+{% endset %}
+{% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+<span class="label">
+    <span class="icon"><img alt="Redis" src="data:image/png;base64,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"/></span>
+    <strong>Redis</strong>
+    <span class="count">
+        <span>{{ collector.commandsCount }}</span>
+        <span>{{ '%0.2f'|format(collector.executionTime * 1000) }} ms</span>
+    </span>
+</span>
+{% endblock %}
+
+{% block panel %}
+<h2>Commands</h2>
+
+{% if collector.commandsCount == 0 %}
+<p><em>No redis commands executed.</em></p>
+{% else %}
+<ul class="alt">
+    {% for command in collector.commands %}
+    <li class="{{ cycle(['odd', 'even'], loop.index) }}{% if command.error %} error{% endif %}">
+        <div>
+            <code>{{ command.command }}</code>
+        </div>
+        <small>
+            <strong>Time</strong>: {{ '%0.2f'| format(command.executionTime * 1000) }} ms
+            <strong>Connection</strong>: {{ command.connection }}
+            {% if command.error %}<strong>Error</strong>: {{ command.error }}{% endif %}
+        </small>
+    </li>
+    {% endfor %}
+</ul>
+
+
+<h2>Commands repetitions</h2>
+<ul class="alt">
+    {% for command, count in collector.repetitions %}
+    <li class="{{ cycle(['odd', 'even'], loop.index) }}">
+        <div>
+            <code>{{ command }}</code>
+        </div>
+        <small>
+            <strong>{{ count }}</strong>
+
+        </small>
+    </li>
+    {% endfor %}
+
+
+
+</ul>
+
+{% endif %}
+
+{% endblock %}
