@@ -3,13 +3,12 @@
 
 namespace Lt\Bundle\RedisBundle\Session\Storage\Handler;
 
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeSessionHandler;
 use Lt\Bundle\RedisBundle\Connection\RedisClient;
 
 /**
  * Redis based session storage.
  */
-class RedisSessionHandler extends NativeSessionHandler
+class RedisSessionHandler implements \SessionHandlerInterface
 {
     /**
      * @var RedisClient
@@ -73,6 +72,8 @@ class RedisSessionHandler extends NativeSessionHandler
      */
     public function write($sessionId, $data)
     {
+        print_r($sessionId);
+        print_r($data);
         $this->redis->set($this->getKey($sessionId), $data);
 
         if (isset($this->options['cookie_lifetime']) && 0 < ($expires = (int) $this->options['cookie_lifetime'])) {
