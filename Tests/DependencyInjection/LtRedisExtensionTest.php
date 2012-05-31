@@ -69,6 +69,24 @@ class LtRedisExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($container->getDefinition('monolog.handler.lt_redis')->hasMethodCall('setKey'));
     }
 
+    public function testSwiftMailerConfigurationLoad()
+    {
+        $extension = new LtRedisExtension();
+        $parser = new Parser();
+
+        $config = $parser->parse($this->swiftmailerYmlConfig());
+        $extension->load(array($config), $container = new ContainerBuilder());
+
+        $this->assertTrue($container->hasDefinition('lt_redis.swiftmailer.spool'));
+        $this->assertTrue($container->hasDefinition('lt_redis.swiftmailer'));
+
+        $this->assertTrue($container->getDefinition('lt_redis.swiftmailer.spool')->hasMethodCall('setRedis'));
+        $this->assertTrue($container->getDefinition('lt_redis.swiftmailer.spool')->hasMethodCall('setKey'));
+
+        $this->assertTrue($container->hasAlias('swiftmailer.spool'));
+        $this->assertEquals($container->getAlias('swiftmailer.spool'), 'lt_redis.swiftmailer.spool');
+    }
+
     private function basicYmlConfig()
     {
         return <<<YML
@@ -101,6 +119,19 @@ connections:
 monolog:
     connection: monolog
     key: lt_redis_monolog
+YML;
+    }
+
+    private function swiftmailerYmlConfig()
+    {
+        return <<<YML
+connections:
+    swift:
+        alias: swiftmailer
+
+swiftmailer:
+    connection: swiftmailer
+    key: lt_redis_swiftmailer
 YML;
     }
 }

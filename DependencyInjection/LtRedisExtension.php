@@ -30,6 +30,10 @@ class LtRedisExtension extends Extension
         if (isset($config['monolog'])) {
             $this->loadMonolog($config, $container);
         }
+
+        if (isset($config['swiftmailer'])) {
+            $this->loadSwiftMailerSpool($config, $container);
+        }
     }
 
     /**
@@ -92,4 +96,21 @@ class LtRedisExtension extends Extension
         $def->addMethodCall('setKey', array($config['monolog']['key']));
         $container->setDefinition('monolog.handler.lt_redis', $def);
     }
+
+    /**
+     * Loads the SwiftMailer spool configuration.
+     *
+     * @param array $config A configuration array
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     */
+    protected function loadSwiftMailerSpool(array $config, ContainerBuilder $container)
+    {
+        $def = new Definition('Lt\Bundle\RedisBundle\SwiftMailer\RedisSpool');
+        $def->setPublic(false);
+        $def->addMethodCall('setRedis', array(new Reference(sprintf('lt_redis.%s', $config['swiftmailer']['connection']))));
+        $def->addMethodCall('setKey', array($config['swiftmailer']['key']));
+        $container->setDefinition('lt_redis.swiftmailer.spool', $def);
+        $container->setAlias('swiftmailer.spool', 'lt_redis.swiftmailer.spool');
+    }
+
 }

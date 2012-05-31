@@ -97,4 +97,21 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function addSwiftMailerSpoolSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('swiftmailer')
+                ->canBeUnset()
+                ->children()
+                    ->scalarNode('connection')->isRequired()->end()
+                    ->scalarNode('key')->isRequired()->end()
+                ->end()
+             ->end()
+        ->end();
+    }
+
 }
