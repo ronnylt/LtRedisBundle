@@ -14,7 +14,13 @@
             <tag name="monolog.logger" channel="lt_redis"/>
         </service>
 
+
         <service id="lt_redis.data_collector" class="Lt\Bundle\RedisBundle\DataCollector\RedisDataCollector" public="false">
+
+            <argument type="service" id="lt_redis.logger"/>
+            <tag name="data_collector" template="LtRedisBundle:Collector:redis" id="lt_redis"/>
+        </service>
+
     </services>
 
 </container>
