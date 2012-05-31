@@ -26,6 +26,10 @@ class LtRedisExtension extends Extension
         if (isset($config['session'])) {
             $this->loadSession($config, $container, $loader);
         }
+
+        if (isset($config['monolog'])) {
+            $this->loadMonolog($config, $container);
+        }
     }
 
     /**
@@ -72,5 +76,20 @@ class LtRedisExtension extends Extension
         $container->setAlias('lt_redis.session.handler.connection', sprintf('lt_redis.%s_connection', $container->getParameter('lt_redis.session.handler.connection')));
 
         $container->setParameter('lt_redis.session.handler.prefix', $config['session']['prefix']);
+    }
+
+    /**
+     * Loads the monolog handler configuration.
+     *
+     * @param array $config A configuration array
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     */
+    protected function loadMonolog(array $config, ContainerBuilder $container)
+    {
+        $def = new Definition('Lt\Bundle\RedisBundle\Monolog\Handler\RedisHandler');
+        $def->setPublic(false);
+        $def->addMethodCall('setRedis', array(new Reference(sprintf('lt_redis.%s', $config['monolog']['connection']))));
+        $def->addMethodCall('setKey', array($config['monolog']['key']));
+        $container->setDefinition('monolog.handler.lt_redis', $def);
     }
 }

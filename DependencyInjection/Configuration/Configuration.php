@@ -15,6 +15,8 @@ class Configuration implements ConfigurationInterface
 
         $this->addConnectionsSection($rootNode);
         $this->addSessionStorageHanderSection($rootNode);
+        $this->addMonologHanlderSection($rootNode);
+        $this->addSwiftMailerSpoolSection($rootNode);
 
         return $treeBuilder;
     }
@@ -77,4 +79,22 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
     }
+
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function addMonologHanlderSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('monolog')
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('connection')->isRequired()->end()
+                        ->scalarNode('key')->isRequired()->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
 }

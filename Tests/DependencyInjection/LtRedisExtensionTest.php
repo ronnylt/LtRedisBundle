@@ -54,6 +54,20 @@ class LtRedisExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($container->getParameter('lt_redis.session.handler.prefix'), 'lt_redis_session');
     }
 
+    public function testMonologConfigurationLoad()
+    {
+        $extension = new LtRedisExtension();
+        $parser = new Parser();
+
+        $config = $parser->parse($this->monologYmlConfig());
+        $extension->load(array($config), $container = new ContainerBuilder());
+
+        $this->assertTrue($container->hasDefinition('monolog.handler.lt_redis'));
+        $this->assertTrue($container->hasDefinition('lt_redis.monolog'));
+
+        $this->assertTrue($container->getDefinition('monolog.handler.lt_redis')->hasMethodCall('setRedis'));
+        $this->assertTrue($container->getDefinition('monolog.handler.lt_redis')->hasMethodCall('setKey'));
+    }
 
     private function basicYmlConfig()
     {
@@ -74,6 +88,19 @@ connections:
 session:
     connection: session
     prefix: lt_redis_session
+YML;
+    }
+
+    private function monologYmlConfig()
+    {
+        return <<<YML
+connections:
+    monolog:
+        alias: monolog
+
+monolog:
+    connection: monolog
+    key: lt_redis_monolog
 YML;
     }
 }
