@@ -72,8 +72,6 @@ class RedisSessionHandler implements \SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        print_r($sessionId);
-        print_r($data);
         $this->redis->set($this->getKey($sessionId), $data);
 
         if (isset($this->options['cookie_lifetime']) && 0 < ($expires = (int) $this->options['cookie_lifetime'])) {
