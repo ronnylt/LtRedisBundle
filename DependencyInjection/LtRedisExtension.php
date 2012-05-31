@@ -22,6 +22,10 @@ class LtRedisExtension extends Extension
         foreach ($config['connections'] as $connection) {
             $this->loadConnection($connection, $container);
         }
+
+        if (isset($config['session'])) {
+            $this->loadSession($config, $container, $loader);
+        }
     }
 
     /**
@@ -53,4 +57,20 @@ class LtRedisExtension extends Extension
         $container->setAlias(sprintf('lt_redis.%s_connection', $config['alias']), sprintf('lt_redis.%s', $config['alias']));
     }
 
+    /**
+     * Loads the session configuration.
+     *
+     * @param array $config A configuration array
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     * @param XmlFileLoader $loader
+     */
+    protected function loadSession(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+    {
+        $loader->load('session.xml');
+
+        $container->setParameter('lt_redis.session.handler.connection', $config['session']['connection']);
+        $container->setAlias('lt_redis.session.handler.connection', sprintf('lt_redis.%s_connection', $container->getParameter('lt_redis.session.handler.connection')));
+
+        $container->setParameter('lt_redis.session.handler.prefix', $config['session']['prefix']);
+    }
 }

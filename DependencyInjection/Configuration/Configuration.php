@@ -12,7 +12,9 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('lt_redis');
+
         $this->addConnectionsSection($rootNode);
+        $this->addSessionStorageHanderSection($rootNode);
 
         return $treeBuilder;
     }
@@ -52,6 +54,25 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * Adds Session Storage Hander configuration
+     *
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function addSessionStorageHanderSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('session')
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('connection')->isRequired()->end()
+                        ->scalarNode('prefix')->defaultValue('session')->end()
                     ->end()
                 ->end()
             ->end();

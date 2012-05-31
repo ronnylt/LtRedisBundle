@@ -35,12 +35,45 @@ class LtRedisExtensionTest extends \PHPUnit_Framework_TestCase
         $extension->load(array($config), $container = new ContainerBuilder());
     }
 
+    public function testSessionConfigurationLoad()
+    {
+        $extension = new LtRedisExtension();
+        $parser = new Parser();
+
+        $config = $parser->parse($this->sessionYmlConfig());
+        $extension->load(array($config), $container = new ContainerBuilder());
+
+        $this->assertTrue($container->hasDefinition('lt_redis.session.handler'));
+        $this->assertTrue($container->hasParameter('lt_redis.session.handler.connection'));
+        $this->assertEquals($container->getParameter('lt_redis.session.handler.connection'), 'session');
+
+        $this->assertTrue($container->hasAlias('lt_redis.session.handler.connection'));
+        $this->assertEquals($container->getAlias('lt_redis.session.handler.connection'), 'lt_redis.session_connection');
+
+        $this->assertTrue($container->hasParameter('lt_redis.session.handler.prefix'));
+        $this->assertEquals($container->getParameter('lt_redis.session.handler.prefix'), 'lt_redis_session');
+    }
+
+
     private function basicYmlConfig()
     {
         return <<<YML
 connections:
     default:
         alias: default
+YML;
+    }
+
+    private function sessionYmlConfig()
+    {
+        return <<<YML
+connections:
+    session:
+        alias: session
+
+session:
+    connection: session
+    prefix: lt_redis_session
 YML;
     }
 }
