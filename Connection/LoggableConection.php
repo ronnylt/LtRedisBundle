@@ -5,7 +5,7 @@ namespace Lt\Bundle\RedisBundle\Connection;
 use Predis\Network\IConnectionSingle;
 use Predis\Commands\ICommand;
 
-use Lt\Bundle\RedisBundle\RedisLogger;
+use Lt\Bundle\RedisBundle\Logger\RedisLogger;
 
 class LoggableConection implements IConnectionSingle
 {
