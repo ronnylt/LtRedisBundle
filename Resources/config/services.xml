@@ -21,6 +21,10 @@
             <tag name="data_collector" template="LtRedisBundle:Collector:redis" id="lt_redis"/>
         </service>
 
+        <service id="lt_redis.connection_registry" class="Lt\Bundle\RedisBundle\Connection\ConnectionRegistry">
+            <argument type="service" id="service_container"/>
+        </service>
+
     </services>
 
 </container>
