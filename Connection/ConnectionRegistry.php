@@ -13,7 +13,7 @@ class ConnectionRegistry
         $this->container = $container;
     }
 
-    public function getConnection($name)
+    public function getConnection($name = 'default  ')
     {
         return $this->container->get('lt_redis.' .$name );
     }
