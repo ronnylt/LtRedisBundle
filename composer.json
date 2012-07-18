@@ -9,18 +9,21 @@
         "name": "Ronny López",
         "email": "ronny@pricebets.com"
     }],
+
     "require": {
         "php": ">=5.3.3",
         "symfony/framework-bundle": "2.1.*",
-        "predis/predis": "0.7.*"
+        "predis/predis": "0.7.*",
+        "lt/redtrine": "*"
     },
+
     "require-dev": {
         "symfony/yaml": "2.1.*"
     },
 
-
     "autoload": {
         "psr-0": { "Lt\\Bundle\\RedisBundle": "" }
     },
+    
     "target-dir": "Lt/Bundle/RedisBundle"
 }
