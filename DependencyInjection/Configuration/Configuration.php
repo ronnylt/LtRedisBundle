@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
                         ->fixXmlConfig('dsn')
                         ->children()
                             ->scalarNode('alias')->isRequired()->end()
-                            ->booleanNode('logging')->defaultValue('%kernel.debug%')->end()
+                            ->booleanNode('logging')->defaultValue(false)->end()
                             ->scalarNode('host')->defaultValue('localhost')->end()
                             ->scalarNode('port')->defaultValue(6379)->end()
                             ->scalarNode('database')->defaultValue(0)->end()
