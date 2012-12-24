@@ -7,13 +7,13 @@
     "license": "MIT",
     "authors": [{
         "name": "Ronny López",
-        "email": "ronny@pricebets.com"
+        "email": "hi@ronny.lt"
     }],
 
     "require": {
         "php": ">=5.3.3",
         "symfony/framework-bundle": "2.1.*",
-        "predis/predis": "0.7.*",
+        "predis/predis": "0.8.*",
         "lt/redtrine": "dev-master"
     },
 
